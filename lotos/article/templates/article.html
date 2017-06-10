@@ -1,0 +1,23 @@
+{% extends 'logo.html' %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row" style="margin-top: 20px;">
+    <h4>{{ article.caption }}</h4>
+  </div>
+  <hr/>
+  <div class="row" style="padding: 15px; background-color: rgba(0, 0, 0, .05);">
+    {{ article.body|safe }}
+  </div>
+  <div class="row" style="margin: 15px 0px;">
+    <div class="col-md-6">
+      <small>Статья добавлена: {{ article.date }}</small>
+    </div>
+    <div class="col-md-6" style="text-align: right;">
+      <small>Автор статьи: {{ article.user.email }}</small>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

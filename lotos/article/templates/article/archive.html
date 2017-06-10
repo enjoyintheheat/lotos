@@ -1,0 +1,33 @@
+{% extends 'logo.html' %}
+
+{% block content %}
+
+<div class="container">
+  {% if latest|length %}
+    {% for item in latest %}
+    <div class="row lotos-page__news" style="padding: 5px 15px;">
+      <h4>
+        <a href="articles/{{ item.pk }}">{{ item.caption }}</a>
+      </h4>
+      <p class="lotos-page__news-body">
+        {% autoescape off %}
+          {{ item.body|striptags|truncatechars:128 }}
+        {% endautoescape %}
+      </p>
+      <div class="row">
+        <div class="col-md-8">
+          <p class="lotos-page__news-date"><span class="glyphicon glyphicon-calendar"></span> {{ item.date|timesince }} назад</p>
+        </div>
+        <div class="col-md-4">
+          <a href="">Подробнее</a>
+        </div>
+      </div>
+    </div>
+    <hr/>
+    {% endfor %}
+  {% else %}
+  <smal>Статей нет.</smal>
+  {% endif %}
+</div>
+
+{% endblock %}
