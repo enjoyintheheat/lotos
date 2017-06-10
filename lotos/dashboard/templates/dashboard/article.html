@@ -1,0 +1,59 @@
+{% extends 'sidenavbar.html' %}
+
+{% block content %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+<div id="main">
+  <div class="container-fluid" id="dashboard-inner">
+    <div class="row" style="text-align: center;">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <td>Заголовок</td>
+            <td>Текст</td>
+            <td>Дата создания</td>
+            <td>Автор статьи</td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for article in articles %}
+          <tr>
+            <td>{{ article.caption }}</td>
+            <td>{{ article.body|striptags|truncatechars:32 }}</td>
+            <td>{{ article.date }}</td>
+            <td>{{ article.user.email }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <ul class="pagination">
+      {% if page_obj.has_previous %}
+      <li>
+        <a href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+      </li>
+      {% else %}
+      <li class="disabled">
+        <span>&laquo;</span>
+      </li>
+      {% endif %}
+      {% for i in paginator.page_range %}
+      {% if page_obj.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+      <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+      {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

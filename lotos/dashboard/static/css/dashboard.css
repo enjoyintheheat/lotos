@@ -1,0 +1,11 @@
+#dashboard-inner {
+  padding: 25px;
+}
+
+#dashboard-inner .chart-wrapper {
+  position: relative;
+}
+
+.table > thead td {
+  font-weight: bold;
+}

@@ -1,0 +1,78 @@
+{% extends 'sidenavbar.html' %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+<div id="main">
+  <div class="container-fluid" id="dashboard-inner">
+    <div class="row">
+      <div class="col-xs-6">
+        <h4>Новых пользователей за последние 30 дней.</h4>
+        <div class="chart-wrapper">
+          <canvas id="reg-days" height="300"></canvas>
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <h4>Созданных статей за последние 30 дней</h4>
+        <div class="chart-wrapper">
+          <canvas id="article-days" height="300"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6">
+        <h4>Проведенных транзакций за последние 30 дней.</h4>
+        <div class="chart-wrapper">
+          <canvas id="sales-days" height="300"></canvas>
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <h4>Соотношение категорий товаров.</h4>
+        <div class="chart-wrapper">
+          <canvas id="category-ratio" height="300"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script>
+  $( document ).ready(function() {
+    var data = {
+        labels: ['1', '5', '10', '15', '20', '25', '30'],
+        datasets: [{
+          fillColor: "rgba(220,220,220,0.2)",
+          strokeColor: "rgba(220,220,220,1)",
+          pointColor: "rgba(220,220,220,1)",
+          pointStrokeColor: "#fff",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(220,220,220,1)",
+        }]
+    };
+    var regCtx = document.getElementById("reg-days").getContext("2d");
+    var options = {
+      responsive: true,
+      maintainAspectRatio: false
+    };
+    data['datasets'][0]['data'] = {{ reg_stats }};
+    data['datasets'][0]['strokeColor'] = 'blue';
+    var regStats = new Chart(regCtx).Line(data, options);
+
+    var articleCtx = document.getElementById('article-days').getContext('2d');
+    data['datasets'][0]['data'] = {{ article_stats }};
+    var articleStats = new Chart(articleCtx).Line(data, options);
+
+    var salesCtx = document.getElementById('sales-days').getContext('2d');
+    data['datasets'][0]['data'] = {{ sales_stats }};
+    var salesStats = new Chart(salesCtx).Line(data, options);
+
+    var categoryCtx = document.getElementById('category-ratio').getContext('2d');
+    data['labels'] = ['Овощи', 'Фрукты', 'Рыба', 'Мясо', 'Напитки', 'Алкоголь'];
+    data['datasets'][0]['backgroundColor'] = ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"];
+    data['datasets'][0]['data'] = {{ category_ratio }};
+    var categoryRatio = new Chart(categoryCtx).Pie(data, options);
+  });
+  </script>
+</div>
+
+{% endblock %}
