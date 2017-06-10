@@ -1,0 +1,139 @@
+{% block header %}
+{% load static %}
+<nav class="navbar navbar-inverse lotos-page-nav">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">
+        <img src="{% static "imgs/lotos-logo.png" %}" alt="">
+      </a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="{% url 'article:archive' %}">Новости</a></li>
+      <li><a href="{% url 'goods:list' %}">Ассортимент</a></li>
+      <li><a href="{% url 'goods:discounts' %}">Скидки</a></li>
+      <li><a href="{% url 'base:about' %}">О нас</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      {% if not user.is_authenticated %}
+      <li>
+        <a href="#login" data-toggle="modal" data-target="#login">
+          <span class="glyphicon glyphicon-log-in"></span> Войти
+        </a>
+      </li>
+      <li>
+        <a href="#signup" data-toggle="modal" data-target="#signup">
+          <span class="glyphicon glyphicon-user"></span> Регистрация
+        </a>
+      </li>
+      {% else %}
+      <li style="padding-top: 8px;">
+        <button
+          class="btn btn-default dropdown-toggle"
+          type="button" id="dropdownAccount"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="true">
+          Вы зашли как {{ user.email }}
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownAccount">
+          <li><a href="{% url 'account:detail' email=user.email %}">Информация</a></li>
+          <li><a href="{{ user.is_superuser|yesno:"/admin, /dashboard" }}">Панель управления</a></li>
+          {% if user.is_staff %}
+          <li><a href="{% url 'dashboard:index' %}">Администрирование</a></li>
+          {% endif %}
+          <li role="separator" class="divider"></li>
+          <li><a href="{% url 'account:logout' %}">Выйти</a></li>
+        </ul>
+      </li>
+      {% endif %}
+      <li>
+        <a href="{% url 'wishlist:index' %}" class="lotos-page-nav__wish-list">
+          <span class="glyphicon glyphicon-heart"></span>
+          Корзина
+          <span class="badge">{{ user.product_set.count }}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="loginLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="loginLabel">Вход</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-info" role="alert">
+          Удостоверьтесь, что ваш аккаунт <strong>существует</strong>, иначе авторизация не будет пройдена.
+          Для регистрации нового аккаунта необходимо выбрать пункт в меню <strong>Регистрация</strong>.
+        </div>
+        <form id="login-form" action="{% url 'account:signin' %}" method="POST">
+          {% csrf_token %}
+          <div class="input-group">
+            <span class="input-group-addon" id="email-login">
+              <i class="glyphicon glyphicon-envelope"></i>
+              Почта
+            </span>
+            {{ form.email }}
+          </div>
+          <div class="input-group" style="margin-top: 15px;">
+            <span class="input-group-addon" id="password-login">
+              <i class="glyphicon glyphicon-lock"></i>
+              Пароль
+            </span>
+            {{ form.password }}
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="$('#login-form').submit()">Войти</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="signupLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="signupLabel">Регистрация</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-info" role="alert">
+          Для <strong>регистрации</strong> необходимо, чтобы ваш <strong>e-mail</strong> был не занят кем-то другим.
+        </div>
+        <form id="signup-form" action="{% url 'account:signup' %}" method="POST">
+          {% csrf_token %}
+          <div class="input-group">
+            <span class="input-group-addon" id="email-signup">
+              <i class="glyphicon glyphicon-envelope"></i>
+              Почта
+            </span>
+            {{ form_reg.email }}
+          </div>
+          <div class="input-group" style="margin-top: 15px;">
+            <span class="input-group-addon" id="password1-signup">
+              <i class="glyphicon glyphicon-lock"></i>
+              Пароль
+            </span>
+            {{ form_reg.password1 }}
+          </div>
+          <div class="input-group" style="margin-top: 15px;">
+            <span class="input-group-addon" id="password2-signup">
+              <i class="glyphicon glyphicon-lock"></i>
+              Повторите пароль
+            </span>
+            {{ form_reg.password2 }}
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="$('#signup-form').submit()">Регистрация</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

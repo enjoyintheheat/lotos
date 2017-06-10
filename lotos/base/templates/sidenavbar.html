@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block sidenavbar %}
+
+<div class="row-offcanvas row-offcanvas-left">
+  <div id="sidebar" class="sidebar-offcanvas">
+      <div class="col-md-12">
+        <h3>Управление</h3>
+        <ul class="nav nav-pills nav-stacked">
+          {% load base.tags %}
+          <li {% highlight_active 'dashboard:index' %}>
+            <a href="{% url 'dashboard:index' %}">
+              Общая информация
+              <span
+                style="font-size:16px;"
+                class="pull-right hidden-xs showopacity glyphicon glyphicon-home">
+              </span>
+            </a>
+          </li>
+          {% if perms.articles.add_article and perms.articles.change_article and perms.articles.delete_article %}
+          <li {% highlight_active 'dashboard:articles' %}>
+            <a href="{% url 'dashboard:articles' %}">
+              Статьи
+              <span
+                style="font-size:16px;"
+                class="pull-right hidden-xs showopacity glyphicon glyphicon-book">
+              </span>
+            </a>
+          </li>
+          {% endif %}
+          {% if perms.goods.add_goods and perms.goods.change_goods and perms.goods.delete_goods %}
+          <li>
+            <a href="#">
+              Товары
+              <span
+                style="font-size:16px;"
+                class="pull-right hidden-xs showopacity glyphicon glyphicon-shopping-cart">
+              </span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+  </div>
+
+{% endblock %}

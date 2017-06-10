@@ -1,0 +1,147 @@
+html {
+  height: 100%;
+  margin: 0;
+}
+
+/*body {
+  min-height: 100%;
+  margin: 0;
+  position: relative;
+  padding-bottom: 150px;
+}*/
+
+.lotos-page-nav {
+  background-color: #155499;
+  border-radius: 0;
+  border: none;
+  margin: 0;
+}
+
+/* fix vertical alignment for logo */
+.lotos-page-nav .navbar-brand {
+  padding-top: 10px;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+  color: white;
+  transition: ease .15s;
+  font-weight: bold;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover {
+  color: red;
+}
+
+#lotos-page-header {
+  height: 200px;
+  background-image: url('../imgs/lotos-photo.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.lotos-page-nav__wish-list .badge {
+  position: relative;
+  top: -8px;
+  left: -2px;
+  background-color: #ffd202;
+  color: #155499;
+}
+
+.lotos-page__messages {
+  margin: 15px auto 0px auto;
+}
+
+.lotos-page__news .panel-heading {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.lotos-page__news a {
+  color: #155499;
+}
+
+.lotos-page__news-body {
+  padding: 10px 20px;
+  word-break: break-all;
+}
+
+.lotos-page__news h4 {
+  position: relative;
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, .025);
+}
+
+.lotos-page__news-date {
+  display: inline-block;
+  font-size: 13px;
+  color: gray;
+  height: 100%;
+  padding: 7px 20px;
+}
+
+.lotos-page__footer {
+  /*position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;*/
+  padding: 13px;
+  background-color: #155499;
+  color: white;
+}
+
+.lotos-page__footer li {
+  margin: 10px 0px;
+}
+
+.lotos-page__footer a {
+  color: white;
+}
+
+body,html,.row-offcanvas {
+  height:100%;
+}
+
+#sidebar {
+  width: inherit;
+  min-width: 220px;
+  max-width: 220px;
+  background-color:#f5f5f5;
+  float: left;
+  height: 100%;
+  position:relative;
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+#main {
+  height:100%;
+  overflow:auto;
+}
+
+/*
+ * off Canvas sidebar
+ * --------------------------------------------------
+ */
+@media screen and (max-width: 768px) {
+  .row-offcanvas {
+    position: relative;
+    -webkit-transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+    width:calc(100% + 220px);
+  }
+
+  .row-offcanvas-left
+  {
+    left: -220px;
+  }
+
+  .row-offcanvas-left.active {
+    left: 0;
+  }
+
+  .sidebar-offcanvas {
+    position: absolute;
+    top: 0;
+  }
+}

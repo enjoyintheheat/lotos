@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block logo %}
+
+<header id="lotos-page-header"></header>
+{% if messages %}
+<div class="container lotos-page__messages">
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    {{ message }}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% endblock %}

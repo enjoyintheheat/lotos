@@ -1,0 +1,90 @@
+{% extends 'logo.html' %}
+
+{% block content %}
+
+<div class="container">
+  <div class="col-md-8">
+    <h4>Интересное</h4>
+    <div id="lotos-page-carousel" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#lotos-page-carousel" data-slide-to="0" class="active"></li>
+        <li data-target="#lotos-page-carousel" data-slide-to="1"></li>
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        <div class="item active">
+          <img src="http://thlotos.ru/upload/iblock/abd/abdbb121a2f58e15b1ec04b92272bfa3.jpg" alt="">
+        </div>
+        <div class="item">
+          <img src="http://thlotos.ru/upload/iblock/72b/72bd323e0bd64bb221065bb66183626b.jpg" alt="">
+        </div>
+      </div>
+      <a class="left carousel-control" href="#lotos-page-carousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Предыдущий</span>
+      </a>
+      <a class="right carousel-control" href="#lotos-page-carousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Следующий</span>
+      </a>
+    </div>
+    <h4>Лента новостей</h4>
+    {% if articles|length %}
+      {% for item in articles %}
+      <div class="row lotos-page__news" style="padding: 5px 15px;">
+        <h4>
+          <a href="{% url 'article:page' pk=item.pk %}">{{ item.caption }}</a>
+        </h4>
+        <p class="lotos-page__news-body">
+          {% autoescape off %}
+            {{ item.body|striptags|truncatechars:128 }}
+          {% endautoescape %}
+        </p>
+        <div class="row">
+          <div class="col-md-8">
+            <p class="lotos-page__news-date"><span class="glyphicon glyphicon-calendar"></span> {{ item.date|timesince }} назад</p>
+          </div>
+          <div class="col-md-4">
+            <a href="">Подробнее</a>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      {% endfor %}
+    {% else %}
+    <smal>Статей нет.</smal>
+    {% endif %}
+  </div>
+  {% include 'pick_product.html' %}
+  <div class="col-md-4">
+    <h4>Случайные скидки</h4>
+    {% if discounts|length %}
+      {% for discount in discounts %}
+      <a
+        href="#"
+        onclick="pick_product(this, {{ discount.pk }})"
+        class="thumbnail"
+        data-name="{{ discount.name }}"
+        data-quantity="{{ discount.quantity }}"
+        data-unit="{{ discount.unit }}"
+        data-price="{{ discount.price }}"
+        data-percentage="{{ discount.percentage }}">
+        <img src="{{ discount.img.url }}" alt="{{ discount.name }}">
+        <div class="alert alert-info" style="margin-bottom: 0px; text-align: center;">
+          {{ discount.name }}
+          <br/>
+          Скидка {{ discount.percentage|add:"-100" }}%
+        </div>
+      </a>
+      {% endfor %}
+    {% else %}
+      <small>Скидки отсутствуют</small>
+    {% endif %}
+  </div>
+  {% if user.product_set.count >= 2 %}
+  <div class="row" style="clear: both;">
+    asd
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}
