@@ -1,0 +1,54 @@
+{% extends 'logo.html' %}
+
+{% block content %}
+
+<div class="container">
+  <hr/>
+  <div class="row col-md-6 col-md-offset-3" style="margin-top: 20px;">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        Информация о пользователе
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <h4 style="margin-left: 10px;">{{ account.email }}</h4>
+        </div>
+        <table class="table">
+          <tbody>
+            <tr>
+              <td>Состоит в группе</td>
+              {% if account.group %}
+              <td>{{ account.group }}</td>
+              {% else %}
+              <td>Пользователь</td>
+              {% endif %}
+            </tr>
+            <tr>
+              <td>Активен</td>
+              <td>{{ account.is_active|yesno:"Да, Нет" }}</td>
+            </tr>
+            <tr>
+              <td>Персонал</td>
+              <td>{{ account.is_staff|yesno:"Да, Нет" }}</td>
+            </tr>
+            <tr>
+              <td>Зарегистрирован</td>
+              <td>{{ account.created_at }}</td>
+            </tr>
+            <tr>
+              <td>Обновлялся</td>
+              <td>{{ account.updated_at }}</td>
+            </tr>
+            <tr>
+              <td>Добавленных статей</td>
+              <td>{{ articles|length }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <hr/>
+  </div>
+</div>
+
+{% endblock %}
