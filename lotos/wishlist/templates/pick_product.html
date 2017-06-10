@@ -1,0 +1,44 @@
+{% block pick_product %}
+
+<form id="pick-product-form" action="{% url 'wishlist:add' %}" method="POST" style="display: none;">
+  {% csrf_token %}
+  <input id="pick-product-input" name="pick_product" type="text">
+</form>
+
+<script>
+
+  function pick_product(self, pk) {
+    $('#pick-product-input').val(pk);
+    // change modal inner
+    var price = parseInt($(self).attr('data-price'));
+    var percentage = parseInt($(self).attr('data-percentage')) / 100;
+    var result_price = Math.ceil(price * percentage);
+    $('#pick-product-modal .modal-body').html(
+      "Вы собираетесь добавить в список желаемого товар <strong>"
+      + $(self).attr('data-name') + "</strong>"
+      + " за " + $(self).attr('data-quantity')
+      + " " + $(self).attr('data-unit') + ". По итоговой цене: "
+      + "<mark>" + result_price + " рублей.</mark>"
+    );
+    $('#pick-product-modal').modal('show');
+  };
+</script>
+
+<div class="modal fade" id="pick-product-modal" tabindex="-1" role="dialog" aria-labelledby="pick-product-label">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="pick-product-label">Добавление товара в список желаемого</h4>
+      </div>
+      <div class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="$('#pick-product-form').submit()">Добавить товар</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

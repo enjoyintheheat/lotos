@@ -1,0 +1,31 @@
+{% extends 'logo.html' %}
+
+{% block content %}
+{% include 'drop_product.html' %}
+<div class="container">
+  <div class="row">
+    <h3>Товаров в вашей корзине {{ goods.count }}.</h3>
+  </div>
+  <hr/>
+  {% if goods.count %}
+  <div class="row">
+  {% for prod in goods %}
+    <div class="col-md-4">
+      <a
+        href="#"
+        onclick="drop_product(this, {{ prod.pk }})"
+        data-name="{{ prod.product.name }}"
+        class="thumbnail">
+        <img src="/{{ prod.product.img.url }}" alt="{{ prod.product.name }}">
+        <div class="alert alert-info" style="margin-bottom: 0px; text-align: center;">
+          {{ prod.product.name }}
+        </div>
+      </a>
+    </div>
+  {% endfor %}
+  </div>
+  {% endif %}
+  <hr/>
+</div>
+
+{% endblock %}
