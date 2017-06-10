@@ -23,7 +23,7 @@ class UserManager(BaseUserManager):
 
         return user
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(db_index=True, unique=True, verbose_name='Почта')
     is_active = models.BooleanField(default=True, verbose_name='Активен')
     is_staff = models.BooleanField(default=False, verbose_name='Персонал')
