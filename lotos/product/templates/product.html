@@ -1,0 +1,33 @@
+{% extends 'logo.html' %}
+
+{% block content %}
+{% include 'pick_product.html' %}
+<div class="container">
+  <div class="row">
+    {% if goods|length %}
+    {% for product in goods %}
+    <div class="col-md-4" style="margin-top: 20px;">
+      <a
+        href="#"
+        onclick="pick_product(this, {{ product.pk }})"
+        data-name="{{ product.name }}"
+        data-quantity="{{ product.quantity }}"
+        data-unit="{{ product.unit }}"
+        data-price="{{ product.price }}"
+        data-percentage="{{ product.percentage }}"
+        class="thumbnail">
+        <img src="/{{ product.img.url }}" alt="{{ product.name }}">
+        <div class="alert alert-info" style="margin-bottom: 0px; text-align: center;">
+          {{ product.name }}
+
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+    {% else %}
+    <h4>Товаров нет.</h4>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

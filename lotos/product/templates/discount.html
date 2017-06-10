@@ -1,0 +1,26 @@
+{% extends 'logo.html' %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    {% if discounts|length %}
+      {% for discount in discounts %}
+      <div class="col-md-4" style="margin-top: 20px;">
+        <a href="#" class="thumbnail">
+          <img src="/{{ discount.img.url }}" alt="{{ discount.name }}">
+          <div class="alert alert-info" style="margin-bottom: 0px; text-align: center;">
+            {{ discount.name }}
+            <br/>
+            Скидка {{ discount.percentage|add:"-100" }}%
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    {% else %}
+    <small>Скидки отсутствуют</small>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

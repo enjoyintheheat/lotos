@@ -1,0 +1,37 @@
+{% block drop_product %}
+
+<form id="drop_transaction-form" action="{% url 'wishlist:delete' %}" method="POST" style="display: none;">
+  {% csrf_token %}
+  <input id="drop_transaction-input" name="drop_transaction" type="text">
+</form>
+
+<script>
+  function drop_product(self, pk) {
+    $('#drop_transaction-input').val(pk);
+    $('#drop_transaction-modal .modal-body').html(
+      "Вы собираетесь удалить товар <strong>"
+      + $(self).attr('data-name') + "</strong>"
+      + "Вы уверены в этом?"
+    );
+    $('#drop_transaction-modal').modal('show');
+  };
+</script>
+
+<div class="modal fade" id="drop_transaction-modal" tabindex="-1" role="dialog" aria-labelledby="drop_transaction-label">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="drop_transaction-label">Удаление товара из списка желаемого</h4>
+      </div>
+      <div class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="$('#drop_transaction-form').submit()">Удалить товар</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
